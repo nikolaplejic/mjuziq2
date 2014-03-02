@@ -1,0 +1,6 @@
+bin/
+lib/
+share/
+*.pyc
+mjuziq2/mjuziq2/settings.py
+mjuziq2/db.sqlite3

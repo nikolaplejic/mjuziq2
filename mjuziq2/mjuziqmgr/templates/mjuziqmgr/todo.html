@@ -1,0 +1,56 @@
+{% extends "mjuziqmgr/master.html" %}
+
+{% block title %}todo{% endblock %}
+
+{% block content %}
+  <h2>ToDo</h2>
+
+  {% for tag, albums in albums_by_tag.items %}
+  {% if albums %}
+  <a href="#tag-{{ tag }}">{{ tag }}</a>
+  {% endif %}
+  {% endfor %}
+
+  {% for tag, albums in albums_by_tag.items %}
+    {% if albums %}
+    <h3 id="tag-{{ tag }}">{{ tag }}</h3>
+
+    <div class="table-responsive">
+      <table class="table table-condensed table-striped">
+        <thead>
+          <tr>
+            <th style="width: 30%;">Artist</th>
+            <th style="width: 30%;">Album</th>
+            <th style="width: 10%;">Year</th>
+            <th style="width: 30%;">Tags</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for album in albums %}
+          <tr>
+            <td>{{ album.artist }}</td>
+            <td>
+              {% if album.notes %}
+              <a href="#" class="album-note" data-container="body"
+                data-toggle="popover" data-placement="top"
+                data-content="{{ album.notes }}" data-title="Album Note">
+              {% endif %}
+              {{ album.album }}
+              {% if album.notes %}
+              </a>
+              {% endif %}
+            </td>
+            <td>{{ album.year }}</td>
+            <td>
+              {% for tag in album.tags.all %}
+              <span class="label label-info">{{ tag }}</span>
+              {% endfor %}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>  
+    </div>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

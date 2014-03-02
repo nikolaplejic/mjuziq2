@@ -1,0 +1,73 @@
+{% extends "mjuziqmgr/master.html" %}
+
+{% block title %}home{% endblock %}
+
+{% block content %}
+  <h2>{{ year }} Albums</h2>
+
+  {% if in_progress %}
+  <h3>In Progress</h3>
+
+  <div class="table-responsive">
+    <table class="table table-condensed table-striped">
+      <thead>
+        <tr>
+          <th style="width: 30%;">Artist</th>
+          <th style="width: 30%;">Album</th>
+          <th style="width: 10%;">Year</th>
+          <th style="width: 30%;">Tags</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for album in in_progress %}
+        <tr>
+          <td>{{ album.artist }}</td>
+          <td>{{ album.album }}</td>
+          <td>{{ album.year }}</td>
+          <td>
+            {% for tag in album.tags.all %}
+            <span class="label label-info">{{ tag }}</span>
+            {% endfor %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>  
+  </div>
+  {% endif %}
+
+  {% for month, albums in albums_by_month.items %}
+    {% if albums %}
+    <h3>{{ month }}</h3>
+
+    <div class="table-responsive">
+      <table class="table table-condensed table-striped">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Artist</th>
+            <th style="width: 25%;">Album</th>
+            <th style="width: 10%;">Year</th>
+            <th style="width: 10%;">Score</th>
+            <th style="width: 30%;">Tags</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for album in albums %}
+          <tr>
+            <td>{{ album.artist }}</td>
+            <td>{{ album.album }}</td>
+            <td>{{ album.year }}</td>
+            <td>{{ album.score }}</td>
+            <td>
+              {% for tag in album.tags.all %}
+              <span class="label label-info">{{ tag }}</span>
+              {% endfor %}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>  
+    </div>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
