@@ -5,6 +5,11 @@ from django.utils import timezone
 from mjuziqmgr.models import Album
 import calendar
 
+class Opts:
+  def __init__(self):
+    self.model_name = "album"
+    self.app_label = "mjuziqmgr"
+
 def index(request):
   year = timezone.now().year
   months = range(1, timezone.now().month + 1)
@@ -22,6 +27,8 @@ def index(request):
     except Album.DoesNotExist as e:
       ctx["albums_by_month"][month_name] = []
 
+  ctx['opts'] = Opts()
+
   return render(request, 'mjuziqmgr/index.html', ctx)
 
 def todo(request):
@@ -36,5 +43,7 @@ def todo(request):
       ctx["albums_by_tag"][tag] = Album.objects.filter(listened=False, tags__name__in=[tag]).order_by('-year', 'artist', 'album')
     except Album.DoesNotExist as e:
       ctx["albums_by_tag"][tag] = []
+
+  ctx['opts'] = Opts()
 
   return render(request, 'mjuziqmgr/todo.html', ctx)

@@ -1,5 +1,7 @@
 {% extends "mjuziqmgr/master.html" %}
 
+{% load admin_urls %}
+
 {% block title %}todo{% endblock %}
 
 {% block content %}
@@ -20,9 +22,10 @@
         <thead>
           <tr>
             <th style="width: 30%;">Artist</th>
-            <th style="width: 30%;">Album</th>
+            <th style="width: 25%;">Album</th>
             <th style="width: 10%;">Year</th>
             <th style="width: 30%;">Tags</th>
+            <th style="width: 5%;"></th>
           </tr>
         </thead>
         <tbody>
@@ -46,6 +49,7 @@
               <span class="label label-info">{{ tag }}</span>
               {% endfor %}
             </td>
+            <td><a href="{% url opts|admin_urlname:'change' album.pk %}"><i class="fa fa-edit"></i></a></td>
           </tr>
         {% endfor %}
         </tbody>
